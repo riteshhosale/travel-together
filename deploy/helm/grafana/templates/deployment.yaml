@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "travel-together-grafana.fullname" . }}
+  labels:
+    app: {{ include "travel-together-grafana.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "travel-together-grafana.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "travel-together-grafana.name" . }}
+    spec:
+      serviceAccountName: {{- if .Values.serviceAccount.create }}{{ default (include "travel-together-grafana.fullname" .) .Values.serviceAccount.name }}{{- end }}
+      containers:
+        - name: grafana
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              value: "{{ .Values.adminPassword }}"
+          volumeMounts:
+            - name: grafana-provisioning
+              mountPath: /etc/grafana/provisioning
+            - name: grafana-dashboards
+              mountPath: /var/lib/grafana/dashboards
+            - name: grafana-storage
+              mountPath: /var/lib/grafana
+      volumes:
+        - name: grafana-provisioning
+          configMap:
+            name: {{ include "travel-together-grafana.fullname" . }}-config
+            items:
+              - key: provisioning-datasources.yml
+                path: datasources/datasource.yml
+              - key: provisioning-dashboards.yml
+                path: dashboards/dashboard.yml
+        - name: grafana-dashboards
+          configMap:
+            name: {{ include "travel-together-grafana.fullname" . }}-config
+            items:
+              - key: travel-together-backend-dashboard.json
+                path: travel-together-backend-dashboard.json
+        - name: grafana-storage
+{{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ include "travel-together-grafana.fullname" . }}-pvc
+{{- else }}
+          emptyDir: {}
+{{- end }}

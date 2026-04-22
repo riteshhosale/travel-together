@@ -1,0 +1,44 @@
+replicaCount: 1
+
+image:
+  repository: grafana/grafana
+  tag: "10.0.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3000
+
+adminPassword: "changeme"
+
+prometheus:
+  url: http://prometheus:9090
+
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  storageClass: ""
+
+serviceAccount:
+  create: true
+  name: ""
+
+dashboards:
+  travelTogetherBackend: |
+    {
+      "annotations": {"list": []},
+      "panels": [
+        {
+          "type": "graph",
+          "title": "HTTP Latency (P50/P95/P99)",
+          "targets": [
+            {"expr": "histogram_quantile(0.5, sum(rate(travel_together_http_request_duration_seconds_bucket[5m])) by (le))", "legendFormat": "P50"},
+            {"expr": "histogram_quantile(0.95, sum(rate(travel_together_http_request_duration_seconds_bucket[5m])) by (le))", "legendFormat": "P95"},
+            {"expr": "histogram_quantile(0.99, sum(rate(travel_together_http_request_duration_seconds_bucket[5m])) by (le))", "legendFormat": "P99"}
+          ],
+          "gridPos": { "x": 0, "y": 0, "w": 12, "h": 6 }
+        }
+      ],
+      "title": "Travel Together Backend"
+    }

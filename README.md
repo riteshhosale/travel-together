@@ -1,93 +1,45 @@
-﻿# Travel Together Frontend
+﻿# Travel Together Workspace
 
-Frontend application for the Travel Together platform.
+This workspace is organized into separated project folders:
 
-## Overview
-This app provides:
-- Authentication flows (register/login/logout)
-- Trip discovery, creation, and joining
-- Real-time trip chat UI
-- Reviews and community feed
-- AI tools for planning and luggage guidance
-- Responsive product-style interface
+- `backend/` -> Node.js API server, database models, routes, scripts
+- `frontend/` -> React client app and deployment config
 
-## Tech Stack
-- React 18
-- React Router
-- Socket.IO client
-- Tailwind CSS utilities + custom style tokens
-- Fetch-based API client
+## Folder Rules
 
-## Performance Highlights
-- Route-level lazy loading (code splitting)
-- Async page fallback during chunk loading
-- Optimized production build with hashed assets
+- Do backend work only inside `backend/`
+- Do frontend work only inside `frontend/`
+- Run backend commands from `backend/`
+- Run frontend commands from `frontend/client/`
+- Keep dependencies installed in each project folder, not at workspace root
 
-## Folder Structure
-```text
-frontend/
-  README.md
-  vercel.json
-  client/
-    package.json
-    public/
-    src/
-```
+## Docker
 
-## Prerequisites
-- Node.js 22.x
-- Running backend API (default: http://localhost:5000)
+The repository now includes a local Docker stack for MongoDB, the API, and the React app.
 
-## Installation
+From the workspace root:
+
 ```bash
-cd client
-npm install
+docker compose up --build
 ```
 
-## Environment Variables (optional)
-Create frontend/client/.env if needed:
+Then open:
 
-```env
-REACT_APP_API_URL=http://localhost:5000
-REACT_APP_SOCKET_URL=http://localhost:5000
-```
+- Frontend: http://localhost:3000
+- Backend health: http://localhost:5000/api/health
 
-If these are not set:
-- Development uses http://localhost:5000
-- Production falls back to hosted backend URL coded in the app
+## Common Commands
 
-## Run
-Development:
+Backend:
+
 ```bash
-cd client
+cd backend
+npm run dev
+```
+
+Frontend:
+
+```bash
+cd frontend/client
 npm start
 ```
-
-Production build:
-```bash
-cd client
-npm run build
-```
-
-## Scripts
-Inside frontend/client:
-- npm start
-- npm run build
-- npm test
-
-## Core Flows
-- Register and login
-- Create and join trips
-- Real-time chat in joined trip rooms
-- Post feed updates and reviews
-- Use AI tools with backend fallback-safe responses
-
-## Deployment
-- Frontend can be deployed to Vercel.
-- Ensure backend CORS includes deployed frontend domain.
-- Set REACT_APP_API_URL and REACT_APP_SOCKET_URL to deployed backend URL.
-
-## Troubleshooting
-- 401 errors: check token and login state.
-- Chat not connecting: verify REACT_APP_SOCKET_URL and backend CORS.
-- API failures in dev: ensure backend is running on configured PORT.

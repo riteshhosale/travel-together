@@ -1,0 +1,14 @@
+:root {
+  --fg-radius-sm: 10px;
+  --fg-radius-md: 16px;
+  --fg-radius-lg: 24px;
+
+  --fg-space-xs: 0.25rem;
+  --fg-space-sm: 0.5rem;
+  --fg-space-md: 1rem;
+  --fg-space-lg: 1.5rem;
+  --fg-space-xl: 2rem;
+
+  --fg-transition-fast: 0.18s ease;
+  --fg-transition-medium: 0.28s ease;
+}

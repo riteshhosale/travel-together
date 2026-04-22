@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: travel-together-grafana
+  labels:
+    app: travel-together-grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: travel-together-grafana
+  template:
+    metadata:
+      labels:
+        app: travel-together-grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana:10.0.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-admin
+                  key: admin-password
+          volumeMounts:
+            - name: grafana-provisioning
+              mountPath: /etc/grafana/provisioning
+            - name: grafana-dashboards
+              mountPath: /var/lib/grafana/dashboards
+      volumes:
+        - name: grafana-provisioning
+          configMap:
+            name: travel-together-grafana-config
+            items:
+              - key: provisioning-datasources.yml
+                path: datasources/datasource.yml
+              - key: provisioning-dashboards.yml
+                path: dashboards/dashboard.yml
+        - name: grafana-dashboards
+          configMap:
+            name: travel-together-grafana-config
+            items:
+              - key: travel-together-backend-dashboard.json
+                path: travel-together-backend-dashboard.json

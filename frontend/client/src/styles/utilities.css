@@ -1,0 +1,25 @@
+.fg-stack-sm > * + * {
+  margin-top: var(--fg-space-sm);
+}
+
+.fg-stack-md > * + * {
+  margin-top: var(--fg-space-md);
+}
+
+.fg-stack-lg > * + * {
+  margin-top: var(--fg-space-lg);
+}
+
+.fg-rounded-md {
+  border-radius: var(--fg-radius-md);
+}
+
+.fg-rounded-lg {
+  border-radius: var(--fg-radius-lg);
+}
+
+.fg-surface {
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.28);
+}
