@@ -1,71 +1,93 @@
-# Getting Started with Create React App
+﻿# Travel Together Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Frontend application for the Travel Together platform.
 
-## Available Scripts
+## Overview
+This app provides:
+- Authentication flows (register/login/logout)
+- Trip discovery, creation, and joining
+- Real-time trip chat UI
+- Reviews and community feed
+- AI tools for planning and luggage guidance
+- Responsive product-style interface
 
-In the project directory, you can run:
+## Tech Stack
+- React 18
+- React Router
+- Socket.IO client
+- Tailwind CSS utilities + custom style tokens
+- Fetch-based API client
 
-### `npm start`
+## Performance Highlights
+- Route-level lazy loading (code splitting)
+- Async page fallback during chunk loading
+- Optimized production build with hashed assets
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Folder Structure
+```text
+frontend/
+  README.md
+  vercel.json
+  client/
+    package.json
+    public/
+    src/
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Prerequisites
+- Node.js 22.x
+- Running backend API (default: http://localhost:5000)
 
-### `npm test`
+## Installation
+```bash
+cd client
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Environment Variables (optional)
+Create frontend/client/.env if needed:
 
-### `npm run build`
+```env
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_SOCKET_URL=http://localhost:5000
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+If these are not set:
+- Development uses http://localhost:5000
+- Production falls back to hosted backend URL coded in the app
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Run
+Development:
+```bash
+cd client
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Production build:
+```bash
+cd client
+npm run build
+```
 
-### `npm run eject`
+## Scripts
+Inside frontend/client:
+- npm start
+- npm run build
+- npm test
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Core Flows
+- Register and login
+- Create and join trips
+- Real-time chat in joined trip rooms
+- Post feed updates and reviews
+- Use AI tools with backend fallback-safe responses
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Deployment
+- Frontend can be deployed to Vercel.
+- Ensure backend CORS includes deployed frontend domain.
+- Set REACT_APP_API_URL and REACT_APP_SOCKET_URL to deployed backend URL.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-#
+## Troubleshooting
+- 401 errors: check token and login state.
+- Chat not connecting: verify REACT_APP_SOCKET_URL and backend CORS.
+- API failures in dev: ensure backend is running on configured PORT.
