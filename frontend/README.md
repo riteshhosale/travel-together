@@ -114,6 +114,7 @@ Inside frontend/client:
 - Frontend can be deployed to Vercel.
 - Ensure backend CORS includes deployed frontend domain.
 - Set REACT_APP_API_URL and REACT_APP_SOCKET_URL to deployed backend URL.
+- Live website: https://travel-together-o41z.onrender.com/
 
 ## Troubleshooting
 

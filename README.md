@@ -28,6 +28,10 @@ Then open:
 - Frontend: http://localhost:3000
 - Backend health: http://localhost:5000/api/health
 
+## Live Website
+
+- https://travel-together-o41z.onrender.com/
+
 ## Repository Layout
 
 - The root repo tracks the workspace setup, deploy docs, and the backend gitlink.
