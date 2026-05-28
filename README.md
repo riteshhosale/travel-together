@@ -33,6 +33,8 @@ Then open:
 - The root repo tracks the workspace setup, deploy docs, and the backend gitlink.
 - [backend](backend) is a separate git repository and should be pushed independently.
 - [frontend/client](frontend/client) is the React app you deploy for the web UI.
+- Backend repo: https://github.com/riteshhosale/travel-together-backend.git
+- Root/workspace repo: https://github.com/riteshhosale/travel-together.git
 
 ## Common Commands
 
