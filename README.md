@@ -28,6 +28,12 @@ Then open:
 - Frontend: http://localhost:3000
 - Backend health: http://localhost:5000/api/health
 
+## Repository Layout
+
+- The root repo tracks the workspace setup, deploy docs, and the backend gitlink.
+- [backend](backend) is a separate git repository and should be pushed independently.
+- [frontend/client](frontend/client) is the React app you deploy for the web UI.
+
 ## Common Commands
 
 Backend:
