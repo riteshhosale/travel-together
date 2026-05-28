@@ -71,6 +71,14 @@ function Footer() {
               people would actually trust and use.
             </p>
             <div className='flex flex-wrap gap-3 text-xs'>
+              <a
+                href='https://travel-together-o41z.onrender.com/'
+                target='_blank'
+                rel='noreferrer'
+                className='fg-nav-link'
+              >
+                Live site
+              </a>
               <Link to='/terms' className='fg-nav-link'>
                 Terms
               </Link>
