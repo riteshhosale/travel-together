@@ -1,9 +1,11 @@
 
 {
-  "routes": [
+  "buildCommand": "npm --prefix frontend/client run build",
+  "outputDirectory": "frontend/client/build",
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
