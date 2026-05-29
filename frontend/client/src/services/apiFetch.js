@@ -4,7 +4,7 @@ const API_BASE =
   process.env.REACT_APP_API_URL ||
   (process.env.NODE_ENV === 'development'
     ? 'http://localhost:5000'
-    : 'https://travel-together-backend.onrender.com');
+    : 'https://travel-together-o41z.onrender.com');
 
 const normalizeBase = (base) => base.replace(/\/+$/, '');
 
