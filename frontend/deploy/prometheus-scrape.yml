@@ -1,0 +1,8 @@
+# Prometheus scrape configuration snippet for Travel Together
+scrape_configs:
+  - job_name: 'travel-together-backend'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['travel-together-backend:5000']
+    scrape_interval: 15s
+    scrape_timeout: 10s

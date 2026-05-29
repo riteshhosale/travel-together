@@ -1,0 +1,112 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend-tests:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Cache backend node modules
+        uses: actions/cache@v4
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-backend-${{ hashFiles('backend/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check code format
+        run: npm run format:check
+
+      - name: Run tests
+        run: npm test --silent
+
+      - name: Audit (report)
+        run: npm audit --json > backend-audit.json || true
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-audit
+          path: backend-audit.json
+
+  frontend-build-and-test:
+    name: Frontend Build & Test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/client
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Cache frontend node modules
+        uses: actions/cache@v4
+        with:
+          path: frontend/client/node_modules
+          key: ${{ runner.os }}-frontend-${{ hashFiles('frontend/client/package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check code format
+        run: npm run format:check --if-present || true
+
+      - name: Build
+        run: npm run build --if-present
+
+      - name: Run tests (once)
+        run: npm test -- --watchAll=false || true
+
+      - name: Audit (report)
+        run: npm audit --json > frontend-audit.json || true
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-audit
+          path: frontend-audit.json
+
+  lint:
+    name: Lint (quick)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install deps (root)
+        run: |
+          npm ci --prefix backend || true
+          npm ci --prefix frontend/client || true
+
+      - name: Run frontend lint
+        run: npm --prefix frontend/client run lint || true
+
+      - name: (Optional) Run backend lint
+        run: npm --prefix backend run lint || true

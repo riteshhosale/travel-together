@@ -1,0 +1,57 @@
+name: Deploy Grafana
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy-grafana:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure KUBE_CONFIG is set
+        run: |
+          if [ -z "${{ secrets.KUBE_CONFIG }}" ]; then
+            echo "KUBE_CONFIG secret is not set; aborting";
+            exit 1;
+          fi
+
+      - name: Decode kubeconfig
+        run: |
+          echo "Decoding kubeconfig..."
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > kubeconfig
+          mkdir -p ~/.kube
+          mv kubeconfig ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: '1.27.3'
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+
+      - name: Helm lint
+        run: |
+          helm lint deploy/helm/grafana || true
+
+      - name: Deploy Grafana Helm chart
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          GRAFANA_ADMIN_PASSWORD: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}
+        run: |
+          helm upgrade --install travel-together-grafana deploy/helm/grafana \
+            --namespace monitoring --create-namespace \
+            --set adminPassword="${GRAFANA_ADMIN_PASSWORD}" \
+            --set prometheus.url="http://prometheus:9090" \
+            --wait --atomic --timeout 300s \
+            --kubeconfig ~/.kube/config
+
+      - name: Wait for Grafana rollout
+        run: |
+          kubectl rollout status deployment/travel-together-grafana --namespace monitoring --timeout=120s || true
