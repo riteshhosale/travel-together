@@ -26,14 +26,6 @@ function Navbar() {
 
   const authButtons = authed ? (
     <>
-      <a
-        href='https://travel-together-o41z.onrender.com/'
-        target='_blank'
-        rel='noreferrer'
-        className='fg-btn-secondary text-xs'
-      >
-        Live site
-      </a>
       <Link to='/profile' className='fg-btn-secondary text-xs' onClick={() => setMenuOpen(false)}>
         Profile
       </Link>
@@ -46,14 +38,6 @@ function Navbar() {
     </>
   ) : (
     <>
-      <a
-        href='https://travel-together-o41z.onrender.com/'
-        target='_blank'
-        rel='noreferrer'
-        className='fg-btn-secondary text-xs'
-      >
-        Live site
-      </a>
       <Link to='/login' className='fg-btn-secondary text-xs' onClick={() => setMenuOpen(false)}>
         Login
       </Link>
