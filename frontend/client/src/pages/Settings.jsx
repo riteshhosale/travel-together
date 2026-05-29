@@ -14,35 +14,37 @@ function Settings() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-          setPreferences((prev) => ({
-            ...prev,
-            preferredDestination:
-              prefs.preferredDestinations?.[0] || prev.preferredDestination || '',
-            preferredBudget:
-              prefs.budgetMax !== undefined && prefs.budgetMax !== null
-                ? String(prefs.budgetMax)
-                : prev.preferredBudget || '',
-            travelStyle: prefs.travelStyle || prev.travelStyle || 'any',
-            bio: prefs.bio || prev.bio || '',
-          }));
-              : preferences.preferredBudget || '',
-          travelStyle: prefs.travelStyle || preferences.travelStyle || 'any',
-          bio: prefs.bio || preferences.bio || '',
-        });
+    const loadPreferences = async () => {
+      try {
+        const profile = await apiFetch('/users/profile');
+        const travelPreferences = profile?.travelPreferences || {};
+
+        setPreferences((prev) => ({
+          ...prev,
+          preferredDestination:
+            travelPreferences.preferredDestinations?.[0] || prev.preferredDestination || '',
+          preferredBudget:
+            travelPreferences.budgetMax !== undefined && travelPreferences.budgetMax !== null
+              ? String(travelPreferences.budgetMax)
+              : prev.preferredBudget || '',
+          travelStyle: travelPreferences.travelStyle || prev.travelStyle || 'any',
+          bio: travelPreferences.bio || prev.bio || '',
+        }));
       } catch {
-        // keep local preferences
+        // Keep local preferences if the profile fetch fails.
       } finally {
         setIsLoading(false);
       }
     };
 
-    load();
+    loadPreferences();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const savePreferences = async () => {
     try {
       setIsSavingPrefs(true);
+
       const budgetValue =
         preferences.preferredBudget !== '' ? Number(preferences.preferredBudget) : undefined;
 
@@ -54,13 +56,12 @@ function Settings() {
             ? [preferences.preferredDestination]
             : [],
           budgetMax: budgetValue,
-          budgetMin: budgetValue ? Math.max(0, budgetValue * 0.5) : undefined,
+          budgetMin: budgetValue !== undefined ? Math.max(0, budgetValue * 0.5) : undefined,
           travelStyle: preferences.travelStyle || 'any',
-        setPreferences((prev) => ({ ...prev }));
+          bio: preferences.bio || '',
         }),
       });
 
-      setPreferences({ ...preferences });
       notify({ message: 'Match preferences saved to your account.', type: 'success' });
     } catch (err) {
       notify({ message: err?.message || 'Failed to save preferences', type: 'error' });
@@ -91,7 +92,7 @@ function Settings() {
     }
   };
 
-                        onChange={(e) => setPreferences((prev) => ({ ...prev, preferredDestination: e.target.value }))}
+  return (
     <div className='fg-page min-h-screen px-4 py-12'>
       <div className='fg-page-content mx-auto max-w-3xl fg-rise'>
         <div className='mb-8 flex items-start justify-between gap-4'>
@@ -100,7 +101,7 @@ function Settings() {
             <h1 className='fg-title mt-3 text-3xl font-black'>Your preferences</h1>
           </div>
           <BackButton />
-                        onChange={(e) => setPreferences((prev) => ({ ...prev, preferredBudget: e.target.value }))}
+        </div>
 
         <section className='fg-section space-y-6'>
           <div className='fg-card p-6'>
@@ -109,7 +110,7 @@ function Settings() {
               Used by the Match page to recommend trips and travelers. Saved to your account.
             </p>
             {isLoading ? (
-                        onChange={(e) => setPreferences((prev) => ({ ...prev, travelStyle: e.target.value }))}
+              <p className='fg-muted mt-4 text-sm'>Loading preferences...</p>
             ) : (
               <>
                 <div className='mt-4 grid gap-4 sm:grid-cols-2'>
@@ -118,21 +119,25 @@ function Settings() {
                     <input
                       value={preferences.preferredDestination}
                       onChange={(e) =>
-                        setPreferences({ ...preferences, preferredDestination: e.target.value })
+                        setPreferences((prev) => ({
+                          ...prev,
+                          preferredDestination: e.target.value,
+                        }))
                       }
                       className='fg-input mt-2 text-sm'
                       placeholder='e.g. Goa'
-                        onChange={(e) => setPreferences((prev) => ({ ...prev, bio: e.target.value }))}
+                    />
                   </div>
                   <div>
                     <label className='fg-muted text-xs font-semibold'>Max budget</label>
                     <input
                       value={preferences.preferredBudget}
                       onChange={(e) =>
-                        setPreferences({ ...preferences, preferredBudget: e.target.value })
+                        setPreferences((prev) => ({ ...prev, preferredBudget: e.target.value }))
                       }
                       className='fg-input mt-2 text-sm'
-                      onChange={(e) => setPreferences((prev) => ({ ...prev, reducedMotion: e.target.checked }))}
+                      placeholder='e.g. 50000'
+                      inputMode='numeric'
                     />
                   </div>
                   <div>
@@ -140,7 +145,7 @@ function Settings() {
                     <select
                       value={preferences.travelStyle || 'any'}
                       onChange={(e) =>
-                        setPreferences({ ...preferences, travelStyle: e.target.value })
+                        setPreferences((prev) => ({ ...prev, travelStyle: e.target.value }))
                       }
                       className='fg-input mt-2 text-sm'
                     >
@@ -154,7 +159,7 @@ function Settings() {
                     <label className='fg-muted text-xs font-semibold'>Short bio</label>
                     <textarea
                       value={preferences.bio || ''}
-                      onChange={(e) => setPreferences({ ...preferences, bio: e.target.value })}
+                      onChange={(e) => setPreferences((prev) => ({ ...prev, bio: e.target.value }))}
                       className='fg-input mt-2 min-h-[80px] text-sm'
                       placeholder='What kind of trips do you enjoy?'
                     />
@@ -163,9 +168,9 @@ function Settings() {
                 <label className='mt-4 flex items-center gap-3 text-sm'>
                   <input
                     type='checkbox'
-                    checked={preferences.reducedMotion}
+                    checked={Boolean(preferences.reducedMotion)}
                     onChange={(e) =>
-                      setPreferences({ ...preferences, reducedMotion: e.target.checked })
+                      setPreferences((prev) => ({ ...prev, reducedMotion: e.target.checked }))
                     }
                   />
                   <span className='fg-muted'>Reduce motion effects</span>
