@@ -14,17 +14,17 @@ function Settings() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const profile = await apiFetch('/users/profile');
-        const prefs = profile.travelPreferences || {};
-        setPreferences({
-          ...preferences,
-          preferredDestination:
-            prefs.preferredDestinations?.[0] || preferences.preferredDestination || '',
-          preferredBudget:
-            prefs.budgetMax !== undefined && prefs.budgetMax !== null
-              ? String(prefs.budgetMax)
+          setPreferences((prev) => ({
+            ...prev,
+            preferredDestination:
+              prefs.preferredDestinations?.[0] || prev.preferredDestination || '',
+            preferredBudget:
+              prefs.budgetMax !== undefined && prefs.budgetMax !== null
+                ? String(prefs.budgetMax)
+                : prev.preferredBudget || '',
+            travelStyle: prefs.travelStyle || prev.travelStyle || 'any',
+            bio: prefs.bio || prev.bio || '',
+          }));
               : preferences.preferredBudget || '',
           travelStyle: prefs.travelStyle || preferences.travelStyle || 'any',
           bio: prefs.bio || preferences.bio || '',
@@ -56,7 +56,7 @@ function Settings() {
           budgetMax: budgetValue,
           budgetMin: budgetValue ? Math.max(0, budgetValue * 0.5) : undefined,
           travelStyle: preferences.travelStyle || 'any',
-          bio: preferences.bio || '',
+        setPreferences((prev) => ({ ...prev }));
         }),
       });
 
@@ -91,7 +91,7 @@ function Settings() {
     }
   };
 
-  return (
+                        onChange={(e) => setPreferences((prev) => ({ ...prev, preferredDestination: e.target.value }))}
     <div className='fg-page min-h-screen px-4 py-12'>
       <div className='fg-page-content mx-auto max-w-3xl fg-rise'>
         <div className='mb-8 flex items-start justify-between gap-4'>
@@ -100,7 +100,7 @@ function Settings() {
             <h1 className='fg-title mt-3 text-3xl font-black'>Your preferences</h1>
           </div>
           <BackButton />
-        </div>
+                        onChange={(e) => setPreferences((prev) => ({ ...prev, preferredBudget: e.target.value }))}
 
         <section className='fg-section space-y-6'>
           <div className='fg-card p-6'>
@@ -109,7 +109,7 @@ function Settings() {
               Used by the Match page to recommend trips and travelers. Saved to your account.
             </p>
             {isLoading ? (
-              <p className='fg-muted mt-4 text-sm'>Loading...</p>
+                        onChange={(e) => setPreferences((prev) => ({ ...prev, travelStyle: e.target.value }))}
             ) : (
               <>
                 <div className='mt-4 grid gap-4 sm:grid-cols-2'>
@@ -122,7 +122,7 @@ function Settings() {
                       }
                       className='fg-input mt-2 text-sm'
                       placeholder='e.g. Goa'
-                    />
+                        onChange={(e) => setPreferences((prev) => ({ ...prev, bio: e.target.value }))}
                   </div>
                   <div>
                     <label className='fg-muted text-xs font-semibold'>Max budget</label>
@@ -132,7 +132,7 @@ function Settings() {
                         setPreferences({ ...preferences, preferredBudget: e.target.value })
                       }
                       className='fg-input mt-2 text-sm'
-                      placeholder='e.g. 15000'
+                      onChange={(e) => setPreferences((prev) => ({ ...prev, reducedMotion: e.target.checked }))}
                     />
                   </div>
                   <div>

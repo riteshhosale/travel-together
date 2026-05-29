@@ -1,16 +1,32 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { AUTH_TOKEN_CHANGE_EVENT } from '../services/auth';
+import { getUserIdFromToken } from '../utils/userId';
+import { DEFAULT_PREFERENCES, getPreferencesStorageKey } from '../utils/preferencesStorage';
 
 const AppContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
-  const [preferences, setPreferences] = useLocalStorage('fg.preferences', {
-    preferredBudget: '',
-    preferredDestination: '',
-    travelStyle: 'any',
-    bio: '',
-    reducedMotion: false,
-  });
+  const [activeUserId, setActiveUserId] = useState(() => getUserIdFromToken());
+
+  useEffect(() => {
+    const syncActiveUser = () => {
+      setActiveUserId(getUserIdFromToken());
+    };
+
+    syncActiveUser();
+
+    window.addEventListener(AUTH_TOKEN_CHANGE_EVENT, syncActiveUser);
+    window.addEventListener('storage', syncActiveUser);
+
+    return () => {
+      window.removeEventListener(AUTH_TOKEN_CHANGE_EVENT, syncActiveUser);
+      window.removeEventListener('storage', syncActiveUser);
+    };
+  }, []);
+
+  const storageKey = useMemo(() => getPreferencesStorageKey(activeUserId), [activeUserId]);
+  const [preferences, setPreferences] = useLocalStorage(storageKey, DEFAULT_PREFERENCES);
 
   const value = useMemo(
     () => ({
