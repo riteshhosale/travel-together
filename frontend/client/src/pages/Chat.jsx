@@ -106,6 +106,14 @@ function Chat() {
   }, [token]);
 
   useEffect(() => {
+    if (!activeTripId || !socketRef.current || !isConnected) {
+      return;
+    }
+
+    socketRef.current.emit('joinTrip', activeTripId);
+  }, [activeTripId, isConnected]);
+
+  useEffect(() => {
     const loadTrips = async () => {
       if (!token) {
         setIsLoadingTrips(false);
