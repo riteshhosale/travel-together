@@ -67,6 +67,7 @@ function Chat() {
     }
 
     const socket = io(SOCKET_URL, {
+      transports: ['websocket'],
       auth: {
         token,
       },
