@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import SectionHeader from '../components/SectionHeader';
 import { apiFetch } from '../services/apiFetch';
 import { notify } from '../services/notify';
+import { getBackendBase } from '../services/backendBase';
 import { getUserIdFromToken } from '../utils/userId';
 
 const FALLBACK_IMAGE =
@@ -22,9 +23,7 @@ const resolveImageUrl = (image) => {
     return trimmed;
   }
 
-  const backendBase = (
-    process.env.REACT_APP_API_URL || 'https://travel-together-backend.onrender.com'
-  ).replace(/\/+$/, '');
+  const backendBase = getBackendBase();
 
   if (trimmed.startsWith('/uploads/')) {
     return `${backendBase}${trimmed}`;

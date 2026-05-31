@@ -1,22 +1,9 @@
 import axios from 'axios';
 import { clearToken, getToken } from './auth';
-
-const normalizeBase = (base) => base.replace(/\/+$/, '');
-
-const getDefaultApiBase = () =>
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5000'
-    : 'https://travel-together-o41z.onrender.com';
-
-const resolveBaseUrl = () => {
-  const rawBase = process.env.REACT_APP_API_URL || getDefaultApiBase();
-  const base = normalizeBase(rawBase);
-
-  return base.endsWith('/api') ? base : `${base}/api`;
-};
+import { getApiBase } from './backendBase';
 
 const API = axios.create({
-  baseURL: resolveBaseUrl(),
+  baseURL: getApiBase(),
   timeout: 15000,
 });
 

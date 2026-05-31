@@ -1,18 +1,9 @@
 import { clearToken, getToken } from './auth';
-
-const API_BASE =
-  process.env.REACT_APP_API_URL ||
-  (process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5000'
-    : 'https://travel-together-o41z.onrender.com');
-
-const normalizeBase = (base) => base.replace(/\/+$/, '');
+import { getApiBase } from './backendBase';
 
 const buildUrl = (path) => {
   const normalized = path.startsWith('/') ? path : `/${path}`;
-  const base = normalizeBase(API_BASE);
-  const apiBase = base.endsWith('/api') ? base : `${base}/api`;
-  return `${apiBase}${normalized}`;
+  return `${getApiBase()}${normalized}`;
 };
 
 const isFormData = (body) => typeof FormData !== 'undefined' && body instanceof FormData;

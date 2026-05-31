@@ -5,21 +5,9 @@ import BackButton from '../components/BackButton';
 import Footer from '../components/Footer';
 import { apiFetch } from '../services/apiFetch';
 import { getToken } from '../services/auth';
+import { getSocketBase } from '../services/backendBase';
 
-const normalizeBase = (base) => base.replace(/\/+$/, '');
-
-const resolveSocketUrl = () => {
-  const rawBase =
-    process.env.REACT_APP_SOCKET_URL ||
-    process.env.REACT_APP_API_URL ||
-    (process.env.NODE_ENV === 'development'
-      ? 'http://localhost:5000'
-      : 'https://travel-together-backend.onrender.com');
-  const base = normalizeBase(rawBase);
-  return base.endsWith('/api') ? base.slice(0, -4) : base;
-};
-
-const SOCKET_URL = resolveSocketUrl();
+const SOCKET_URL = getSocketBase();
 
 function Chat() {
   const [searchParams] = useSearchParams();

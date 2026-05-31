@@ -4,19 +4,10 @@ import BackButton from '../components/BackButton';
 import Footer from '../components/Footer';
 import { apiFetch } from '../services/apiFetch';
 import { isAuthenticated } from '../services/auth';
+import { getBackendBase } from '../services/backendBase';
 import { notify } from '../services/notify';
 
-const normalizeBase = (base) => String(base || '').replace(/\/+$/, '');
-
-const resolveAssetBase = () => {
-  const rawBase =
-    process.env.REACT_APP_API_URL ||
-    (process.env.NODE_ENV === 'development'
-      ? 'http://localhost:5000'
-      : 'https://travel-together-backend.onrender.com');
-  const base = normalizeBase(rawBase);
-  return base.endsWith('/api') ? base.slice(0, -4) : base;
-};
+const resolveAssetBase = () => getBackendBase().replace(/\/api$/, '');
 
 const buildImageUrl = (value) => {
   if (!value) {
@@ -250,7 +241,10 @@ function Profile() {
                     Account status
                   </p>
                   <p className='fg-title mt-2 text-sm font-semibold'>Active</p>
-                  <Link to='/settings' className='fg-muted mt-2 inline-block text-xs text-cyan-300 hover:underline'>
+                  <Link
+                    to='/settings'
+                    className='fg-muted mt-2 inline-block text-xs text-cyan-300 hover:underline'
+                  >
                     Change password in Settings
                   </Link>
                 </div>
