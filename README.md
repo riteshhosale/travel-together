@@ -2,9 +2,7 @@
 
 Travel Together is a full-stack travel companion platform that helps travelers discover, create, and join trips while connecting with like-minded people. The platform provides real-time communication, community interaction, trip management, reviews, and AI-powered travel assistance.
 
-# 🌍 Travel Together
-
-![Banner]<img width="3300" height="5100" alt="c0a64f3d-3f77-4f67-8208-d14ad785f382" src="https://github.com/user-attachments/assets/b561df8f-a4a5-4aa7-a042-a7f2f255ca8d" />
+<img width="3300" height="5100" alt="c0a64f3d-3f77-4f67-8208-d14ad785f382" src="https://github.com/user-attachments/assets/b561df8f-a4a5-4aa7-a042-a7f2f255ca8d" />
 
 
 ## ✨ Features
