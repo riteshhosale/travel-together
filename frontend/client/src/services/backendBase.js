@@ -5,7 +5,7 @@ export const getBackendBase = () => {
     process.env.REACT_APP_API_URL ||
     (process.env.NODE_ENV === 'development'
       ? 'http://localhost:5000'
-      : 'https://travel-together-o41z.onrender.com');
+      : 'https://travel-together-backend-1.onrender.com');
 
   return normalizeBase(rawBase);
 };
