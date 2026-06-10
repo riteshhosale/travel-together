@@ -154,6 +154,7 @@ This project is licensed under the MIT License.
 
 * GitHub: https://github.com/riteshhosale
 * Email: [riteshbhosale092007@gmail.com](mailto:riteshbhosale092007@gmail.com)
+<img width="3300" height="5100" alt="c0a64f3d-3f77-4f67-8208-d14ad785f382" src="https://github.com/user-attachments/assets/d4df2459-ba2a-47df-8fba-481bb72cc1ef" />
 
 ---
 
