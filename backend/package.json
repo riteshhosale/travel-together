@@ -12,7 +12,7 @@
     "format": "prettier --write \"server/**/*.js\"",
     "format:check": "prettier --check \"server/**/*.js\"",
     "lint": "eslint server --fix",
-    "prepare": "husky install",
+    "prepare": "echo husky disabled",
     "test": "node --test server/tests/**/*.test.js",
     "smoke:api": "node server/scripts/smokeApi.js"
   },
