@@ -1,3 +1,4 @@
+//change to apiFetch and add stale session handling
 import { clearToken, getToken } from './auth';
 import { getApiBase } from './backendBase';
 
