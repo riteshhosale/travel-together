@@ -111,7 +111,10 @@ function Match() {
                       ))}
                     </ul>
                   )}
-                  <Link to={`/trips/${trip._id}`} className='fg-btn-primary mt-4 inline-block text-sm'>
+                  <Link
+                    to={`/trips/${trip._id}`}
+                    className='fg-btn-primary mt-4 inline-block text-sm'
+                  >
                     View trip
                   </Link>
                 </article>

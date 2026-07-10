@@ -17,14 +17,17 @@ function Terms() {
             </p>
             <p>
               Trip organizers are responsible for their listings. Members join at their own
-              discretion. We do not guarantee trip safety, availability, or third-party services such
-              as maps or AI providers.
+              discretion. We do not guarantee trip safety, availability, or third-party services
+              such as maps or AI providers.
             </p>
             <p>
               Do not post illegal content, harassment, or misleading trip details. We may remove
               content or suspend accounts that violate these terms.
             </p>
-            <p>Contact your trip admin for trip-specific disputes. For platform issues, use Profile settings.</p>
+            <p>
+              Contact your trip admin for trip-specific disputes. For platform issues, use Profile
+              settings.
+            </p>
           </div>
         </section>
         <Footer />

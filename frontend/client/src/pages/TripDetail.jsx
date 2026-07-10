@@ -161,7 +161,9 @@ function TripDetail() {
           <div>
             <p className='fg-kicker text-xs font-semibold uppercase'>Trip details</p>
             <h1 className='fg-title mt-3 text-3xl font-black'>{trip.destination}</h1>
-            <p className='fg-muted mt-2 text-sm'>{formatDate(trip.date)} · {trip.budget || 'Flexible'} budget</p>
+            <p className='fg-muted mt-2 text-sm'>
+              {formatDate(trip.date)} · {trip.budget || 'Flexible'} budget
+            </p>
           </div>
           <BackButton />
         </div>
@@ -234,7 +236,9 @@ function TripDetail() {
                 Members: {trip.joinedCount ?? trip.members?.length ?? 0}
                 {trip.maxMembers ? ` / ${trip.maxMembers}` : ''}
               </span>
-              <span className='fg-chip'>{isAdmin ? 'You are admin' : isMember ? 'Joined' : 'Not joined'}</span>
+              <span className='fg-chip'>
+                {isAdmin ? 'You are admin' : isMember ? 'Joined' : 'Not joined'}
+              </span>
             </div>
           </section>
         )}

@@ -30,7 +30,11 @@ function AI() {
       return 'luggage';
     }
 
-    if (feature.includes('trip-plan') || feature.includes('trip plan') || feature.includes('planner')) {
+    if (
+      feature.includes('trip-plan') ||
+      feature.includes('trip plan') ||
+      feature.includes('planner')
+    ) {
       return 'trip-plan';
     }
 
@@ -51,11 +55,11 @@ function AI() {
       : mode === 'trip-plan'
         ? ['Tokyo', 'Barcelona', 'Bali', 'New York']
         : [
-          'Plan a 3-day Goa trip under 20k INR',
-          'Best places in Himachal for April',
-          'What to pack for Thailand in monsoon',
-          'Budget itinerary for Jaipur and Udaipur',
-        ];
+            'Plan a 3-day Goa trip under 20k INR',
+            'Best places in Himachal for April',
+            'What to pack for Thailand in monsoon',
+            'Budget itinerary for Jaipur and Udaipur',
+          ];
 
   const scrollChatToBottom = () => {
     if (!chatContainerRef.current) {
@@ -218,7 +222,9 @@ function AI() {
                   value={destination}
                   onChange={(event) => setDestination(event.target.value)}
                   placeholder={
-                    mode === 'trip-plan' ? 'Enter destination for trip plan' : 'Enter destination for packing list'
+                    mode === 'trip-plan'
+                      ? 'Enter destination for trip plan'
+                      : 'Enter destination for packing list'
                   }
                   className='fg-input'
                 />

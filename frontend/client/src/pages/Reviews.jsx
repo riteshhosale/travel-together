@@ -290,7 +290,10 @@ function Reviews() {
                         type='button'
                         className='fg-btn-secondary text-xs'
                         onClick={async () => {
-                          const nextRating = window.prompt('New rating (1-5)', String(review.rating));
+                          const nextRating = window.prompt(
+                            'New rating (1-5)',
+                            String(review.rating)
+                          );
                           if (!nextRating) return;
                           try {
                             await apiFetch(`/reviews/${review._id}`, {

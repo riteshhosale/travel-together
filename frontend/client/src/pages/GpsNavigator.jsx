@@ -130,7 +130,8 @@ function GpsNavigator() {
             <p className='fg-kicker text-xs font-semibold uppercase'>{featureName}</p>
             <h1 className='fg-title mt-3 text-3xl font-black sm:text-4xl'>{featureName}</h1>
             <p className='fg-muted mt-2 max-w-2xl text-sm sm:text-base'>
-              Detect your location, sync with TravelTogether, and discover nearby travelers and trips.
+              Detect your location, sync with TravelTogether, and discover nearby travelers and
+              trips.
             </p>
           </div>
           <BackButton />
@@ -205,7 +206,9 @@ function GpsNavigator() {
                   </div>
 
                   <div className='fg-card p-5'>
-                    <p className='fg-title text-sm font-bold'>Nearby travelers ({nearbyUsers.length})</p>
+                    <p className='fg-title text-sm font-bold'>
+                      Nearby travelers ({nearbyUsers.length})
+                    </p>
                     {nearbyUsers.length === 0 ? (
                       <p className='fg-muted mt-3 text-sm'>No travelers found within range yet.</p>
                     ) : (
@@ -218,14 +221,19 @@ function GpsNavigator() {
                         ))}
                       </ul>
                     )}
-                    <p className='fg-title mt-5 text-sm font-bold'>Nearby trips ({nearbyTrips.length})</p>
+                    <p className='fg-title mt-5 text-sm font-bold'>
+                      Nearby trips ({nearbyTrips.length})
+                    </p>
                     {nearbyTrips.length === 0 ? (
                       <p className='fg-muted mt-3 text-sm'>No trips with map coordinates nearby.</p>
                     ) : (
                       <ul className='fg-muted mt-3 space-y-2 text-sm'>
                         {nearbyTrips.slice(0, 5).map((trip) => (
                           <li key={trip._id}>
-                            <Link to={`/trips/${trip._id}`} className='text-cyan-300 hover:underline'>
+                            <Link
+                              to={`/trips/${trip._id}`}
+                              className='text-cyan-300 hover:underline'
+                            >
                               {trip.destination}
                             </Link>
                           </li>
@@ -238,7 +246,8 @@ function GpsNavigator() {
                 <div className='fg-card mt-6 p-5'>
                   <p className='fg-title text-base font-bold'>No location detected yet</p>
                   <p className='fg-muted mt-3 text-sm'>
-                    Tap <strong>Use My GPS</strong> to detect your position and sync with the platform.
+                    Tap <strong>Use My GPS</strong> to detect your position and sync with the
+                    platform.
                   </p>
                 </div>
               )}
