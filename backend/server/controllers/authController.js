@@ -211,9 +211,7 @@ exports.getMe = async (req, res) => {
 
 exports.requestPasswordReset = async (req, res) => {
   try {
-    const normalizedEmail = req.body.email
-      ? String(req.body.email).toLowerCase().trim()
-      : '';
+    const normalizedEmail = req.body.email ? String(req.body.email).toLowerCase().trim() : '';
 
     const user = await User.findOne({ email: normalizedEmail });
 
@@ -230,8 +228,7 @@ exports.requestPasswordReset = async (req, res) => {
     }
 
     res.json({
-      message:
-        'If an account exists for that email, password reset instructions have been sent.',
+      message: 'If an account exists for that email, password reset instructions have been sent.',
     });
   } catch (error) {
     res.status(500).json({

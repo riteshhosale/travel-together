@@ -1,4 +1,7 @@
-const normalizeText = (value) => String(value || '').toLowerCase().trim();
+const normalizeText = (value) =>
+  String(value || '')
+    .toLowerCase()
+    .trim();
 
 const parseBudget = (value) => {
   if (value === '' || value === null || value === undefined) {

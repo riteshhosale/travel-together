@@ -196,9 +196,12 @@ try {
           const diff = process.hrtime(start);
           const durationSeconds = diff[0] + diff[1] / 1e9;
           // prefer mounted route path when available
-          const routePath = (req.baseUrl || '') + (req.route && req.route.path ? req.route.path : req.path || '');
+          const routePath =
+            (req.baseUrl || '') + (req.route && req.route.path ? req.route.path : req.path || '');
           const route = normalizeRoute(routePath || req.originalUrl || 'unknown');
-          httpRequestDurationSeconds.labels(req.method, route, String(res.statusCode)).observe(durationSeconds);
+          httpRequestDurationSeconds
+            .labels(req.method, route, String(res.statusCode))
+            .observe(durationSeconds);
         } catch (e) {
           // ignore metric failures
         }
@@ -233,10 +236,14 @@ app.get('/api/ready', async (req, res) => {
     const state = mongoose.connection.readyState; // 1 = connected
     details.db = state;
 
-    if (state === 1 && mongoose.connection.db && typeof mongoose.connection.db.admin === 'function') {
+    if (
+      state === 1 &&
+      mongoose.connection.db &&
+      typeof mongoose.connection.db.admin === 'function'
+    ) {
       try {
         // ping the primary to ensure the connection and server are responsive
-         
+
         await mongoose.connection.db.admin().ping();
         details.db = 'ok';
       } catch (e) {
@@ -279,7 +286,9 @@ app.get('/metrics', async (req, res) => {
     const metrics = await register.metrics();
     return res.send(metrics);
   } catch (e) {
-    return res.status(500).send(`failed to collect metrics: ${e && e.message ? e.message : String(e)}`);
+    return res
+      .status(500)
+      .send(`failed to collect metrics: ${e && e.message ? e.message : String(e)}`);
   }
 });
 
@@ -470,7 +479,8 @@ const startServer = async () => {
 
     // Optional: server-startup cleanup to delete a seeded/default user.
     try {
-      const doCleanup = String(process.env.DELETE_DEFAULT_ON_STARTUP || '').toLowerCase() === 'true';
+      const doCleanup =
+        String(process.env.DELETE_DEFAULT_ON_STARTUP || '').toLowerCase() === 'true';
       const defaultEmail = process.env.DEFAULT_USER_EMAIL;
 
       if (doCleanup && defaultEmail) {
@@ -484,7 +494,10 @@ const startServer = async () => {
         }
       }
     } catch (cleanupErr) {
-      console.warn('Startup cleanup failed:', cleanupErr && cleanupErr.message ? cleanupErr.message : cleanupErr);
+      console.warn(
+        'Startup cleanup failed:',
+        cleanupErr && cleanupErr.message ? cleanupErr.message : cleanupErr
+      );
     }
     let currentPort = Number(PORT);
 

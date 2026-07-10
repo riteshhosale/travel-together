@@ -1,5 +1,3 @@
- 
-
 const CANDIDATE_PORTS = [5000, 5001, 5002, 5003];
 
 async function request(url, options = {}) {

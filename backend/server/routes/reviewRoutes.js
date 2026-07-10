@@ -4,7 +4,12 @@ const auth = require('../middleware/authMiddleware');
 const { validateBody } = require('../middleware/validate');
 const { createReviewSchema, updateReviewSchema } = require('../validators/requestSchemas');
 
-const { createReview, getReviews, updateReview, deleteReview } = require('../controllers/reviewController');
+const {
+  createReview,
+  getReviews,
+  updateReview,
+  deleteReview,
+} = require('../controllers/reviewController');
 
 router.post('/', auth, validateBody(createReviewSchema), createReview);
 

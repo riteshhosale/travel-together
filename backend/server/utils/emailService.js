@@ -3,9 +3,9 @@ const nodemailer = require('nodemailer');
 const isEmailConfigured = () =>
   Boolean(
     process.env.SMTP_HOST &&
-      process.env.SMTP_USER &&
-      process.env.SMTP_PASS &&
-      process.env.EMAIL_FROM
+    process.env.SMTP_USER &&
+    process.env.SMTP_PASS &&
+    process.env.EMAIL_FROM
   );
 
 const createTransport = () => {

@@ -187,13 +187,14 @@ function buildTripTravelerReasons(trip, candidate) {
   const reasons = [];
   const destinations = candidate.travelPreferences?.preferredDestinations || [];
 
-  if (
-    destinations.some((d) => trip.destination?.toLowerCase().includes(String(d).toLowerCase()))
-  ) {
+  if (destinations.some((d) => trip.destination?.toLowerCase().includes(String(d).toLowerCase()))) {
     reasons.push('Interested in this destination');
   }
 
-  if (candidate.location && trip.destination?.toLowerCase().includes(candidate.location.toLowerCase())) {
+  if (
+    candidate.location &&
+    trip.destination?.toLowerCase().includes(candidate.location.toLowerCase())
+  ) {
     reasons.push('Based near trip region');
   }
 

@@ -24,8 +24,24 @@ router.post('/register', authLimiter, validateBody(registerSchema), registerUser
 router.post('/login', authLimiter, validateBody(loginSchema), loginUser);
 router.post('/logout', logoutUser);
 router.get('/me', auth, getMe);
-router.post('/forgot-password', authLimiter, validateBody(forgotPasswordSchema), requestPasswordReset);
-router.post('/reset-password', authLimiter, validateBody(resetPasswordSchema), resetPasswordWithToken);
-router.post('/change-password', auth, authLimiter, validateBody(changePasswordSchema), changePassword);
+router.post(
+  '/forgot-password',
+  authLimiter,
+  validateBody(forgotPasswordSchema),
+  requestPasswordReset
+);
+router.post(
+  '/reset-password',
+  authLimiter,
+  validateBody(resetPasswordSchema),
+  resetPasswordWithToken
+);
+router.post(
+  '/change-password',
+  auth,
+  authLimiter,
+  validateBody(changePasswordSchema),
+  changePassword
+);
 
 module.exports = router;

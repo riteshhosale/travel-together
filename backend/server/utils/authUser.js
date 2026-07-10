@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-const STALE_SESSION_MESSAGE =
-  'Your session is no longer valid. Please log out and sign in again.';
+const STALE_SESSION_MESSAGE = 'Your session is no longer valid. Please log out and sign in again.';
 
 const getUserIdFromRequest = (req) => {
   if (!req.user) {

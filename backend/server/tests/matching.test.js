@@ -42,11 +42,7 @@ describe('matching utils', () => {
   });
 
   it('sorts matches by score descending', () => {
-    const sorted = sortByScoreDesc([
-      { matchScore: 20 },
-      { matchScore: 80 },
-      { matchScore: 50 },
-    ]);
+    const sorted = sortByScoreDesc([{ matchScore: 20 }, { matchScore: 80 }, { matchScore: 50 }]);
     assert.equal(sorted[0].matchScore, 80);
     assert.equal(sorted[2].matchScore, 20);
   });

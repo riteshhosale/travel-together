@@ -18,7 +18,12 @@ router.get('/profile', auth, getProfile);
 
 router.put('/profile', auth, uploadImage.single('imageFile'), updateProfile);
 
-router.put('/match-preferences', auth, validateBody(updateMatchPreferencesSchema), updateMatchPreferences);
+router.put(
+  '/match-preferences',
+  auth,
+  validateBody(updateMatchPreferencesSchema),
+  updateMatchPreferences
+);
 
 // GPS Tracking endpoints
 router.post('/gps/update', auth, validateBody(updateGpsSchema), updateGpsLocation);

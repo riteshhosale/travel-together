@@ -12,10 +12,7 @@ const getConnectionOptions = () => ({
   maxPoolSize: toPositiveInteger(process.env.MONGO_MAX_POOL_SIZE, 10),
   minPoolSize: toPositiveInteger(process.env.MONGO_MIN_POOL_SIZE, 0),
   retryWrites: process.env.MONGO_RETRY_WRITES !== 'false',
-  serverSelectionTimeoutMS: toPositiveInteger(
-    process.env.MONGO_SERVER_SELECTION_TIMEOUT_MS,
-    10000
-  ),
+  serverSelectionTimeoutMS: toPositiveInteger(process.env.MONGO_SERVER_SELECTION_TIMEOUT_MS, 10000),
   socketTimeoutMS: toPositiveInteger(process.env.MONGO_SOCKET_TIMEOUT_MS, 45000),
 });
 
