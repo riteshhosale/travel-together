@@ -13,7 +13,7 @@
     "format:check": "prettier --check \"server/**/*.js\"",
     "lint": "eslint server --fix",
     "prepare": "echo husky disabled",
-    "test": "node --test server/tests/**/*.test.js",
+    "test": "node --test server/tests",
     "smoke:api": "node server/scripts/smokeApi.js"
   },
   "keywords": [],
