@@ -1,8 +1,12 @@
 const path = require('path');
-const mongoose = require('mongoose');
+const mongoose = require('../vendor/mongoose');
 const connectDB = require('../config/Database');
 
-require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
+try {
+  require('dotenv').config({ path: path.join(__dirname, '..', '..', '.env') });
+} catch (error) {
+  // The test environment does not need dotenv; fall back to process.env.
+}
 
 const validators = [
   {

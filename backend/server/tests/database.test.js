@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const mongoose = require('mongoose');
+const mongoose = require('../vendor/mongoose');
 
 const databaseModulePath = require.resolve('../config/Database');
 

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('../vendor/mongoose');
 
 const STALE_SESSION_MESSAGE = 'Your session is no longer valid. Please log out and sign in again.';
 

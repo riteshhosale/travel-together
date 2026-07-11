@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('../vendor/mongoose');
 
 const toPositiveInteger = (value, fallback) => {
   const parsed = Number(value);
