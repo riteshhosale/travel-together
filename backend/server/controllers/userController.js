@@ -254,8 +254,9 @@ exports.updateProfile = async (req, res) => {
       });
     }
 
-    const { name, email, password, location } = req.body;
-    const removeAvatar = req.body && req.body.removeAvatar === 'true';
+    const { name, email, password, location } = req.body || {};
+
+    const removeAvatar = req.body?.removeAvatar === 'true';
 
     const user = await User.findById(userId);
 
