@@ -52,7 +52,7 @@ const closeDB = connectDB.closeDB;
 const defaultOrigins = [
   'http://localhost:3000',
   'http://127.0.0.1:3000',
-  'https://travel-together-frontend.vercel.app',
+  'https://travel-together-neon.vercel.app',
 ];
 
 const configuredOrigins = `${process.env.CLIENT_URL || ''},${process.env.CLIENT_URLS || ''}`
