@@ -5,10 +5,10 @@ export const getBackendBase = () => {
     process.env.REACT_APP_API_URL ||
     (process.env.NODE_ENV === 'development'
       ? 'http://localhost:5000'
-      : 'https://travel-together-backend-1.onrender.com');
+      : 'https://travel-together-1.onrender.com');
 
   return normalizeBase(rawBase);
-}; // This function determines the backend base URL by checking the environment variable REACT_APP_API_URL. If it's not set, it defaults to 'http://localhost:5000' in development mode and 'https://travel-together-backend-1.onrender.com' in production. The resulting URL is normalized to remove any trailing slashes.
+}; // This function determines the backend base URL by checking the environment variable REACT_APP_API_URL. If it's not set, it defaults to 'http://localhost:5000' in development mode and 'https://travel-together-1.onrender.com' in production. The resulting URL is normalized to remove any trailing slashes.
 
 export const getApiBase = () => {
   const base = getBackendBase();
