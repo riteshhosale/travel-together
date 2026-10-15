@@ -3,6 +3,7 @@ name: Build and Publish Docker Images
 permissions:
   contents: write
   packages: write
+  pull-requests: write
 
 on:
   push:
