@@ -15,8 +15,7 @@ const tripSchema = new mongoose.Schema(
         default: 'Point',
       },
       coordinates: {
-        type: [Number], // [longitude, latitude]
-        default: [0, 0],
+        type: [Number], // [longitude, latitude]; omit when unknown
       },
     },
 
