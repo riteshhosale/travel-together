@@ -19,7 +19,7 @@ spec:
       containers:
         - name: backend
           # Image will be updated by CI to a specific tag. Replace or configure as needed.
-          image: ghcr.io/riteshhosale/travel-together-backend:REPLACE_WITH_IMAGE_TAG
+          image: ghcr.io/riteshhosale/travel-together-backend:7353ded8ae901c751a0fd994d13eef0c3ecb32b0
           ports:
             - containerPort: 5000
           readinessProbe:
