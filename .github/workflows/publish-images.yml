@@ -1,5 +1,9 @@
 name: Build and Publish Docker Images
 
+permissions:
+  contents: write
+  packages: write
+
 on:
   push:
     branches: [ main ]
@@ -61,8 +65,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          sed -i -E "s|image: .*travel-together-backend:.*|image: ghcr.io/${IMAGE_OWNER}/travel-together-backend:${IMAGE_TAG}|g" deploy/backend-deployment.yaml
-          git add deploy/backend-deployment.yaml
+          MANIFEST_PATH="frontend/deploy/backend-deployment.yaml"
+          test -f "$MANIFEST_PATH"
+          sed -i -E "s|image: .*travel-together-backend:.*|image: ghcr.io/${IMAGE_OWNER}/travel-together-backend:${IMAGE_TAG}|g" "$MANIFEST_PATH"
+          git add "$MANIFEST_PATH"
           if git diff --staged --quiet; then
             echo "No manifest changes to commit"
           else
@@ -102,8 +108,9 @@ jobs:
 
       - name: Deploy backend manifest
         run: |
-          kubectl apply -f deploy/backend-deployment.yaml
-          kubectl rollout status deployment/travel-together-backend --timeout=120s || true
+          kubectl apply -f frontend/deploy/backend-deployment.yaml
+          kubectl set image deployment/travel-together-backend backend=ghcr.io/${{ github.repository_owner }}/travel-together-backend:${{ github.sha }}
+          kubectl rollout status deployment/travel-together-backend --timeout=120s
 
       - name: Create PR for manifest update (if branch present)
         id: create_pr
