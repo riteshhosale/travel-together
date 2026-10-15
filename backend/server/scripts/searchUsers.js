@@ -38,7 +38,9 @@ async function main() {
   } finally {
     try {
       await connectDB.closeDB();
-    } catch (_) {}
+    } catch (closeError) {
+      console.warn('Failed to close database connection:', closeError.message);
+    }
   }
 }
 
