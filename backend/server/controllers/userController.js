@@ -108,7 +108,14 @@ exports.getNearbyUsers = async (req, res) => {
       });
     }
 
-    const { maxDistance = 5000 } = req.query; // Default 5km in meters
+    const rawMaxDistance = req.query.maxDistance ?? '5000';
+    const maxDistance = Number(rawMaxDistance);
+
+    if (!Number.isFinite(maxDistance) || maxDistance <= 0 || maxDistance > 100000) {
+      return res.status(400).json({
+        message: 'maxDistance must be a number between 1 and 100000 meters',
+      });
+    }
 
     const user = await User.findById(userId);
 
@@ -130,7 +137,7 @@ exports.getNearbyUsers = async (req, res) => {
             type: 'Point',
             coordinates: user.currentLocation.coordinates,
           },
-          $maxDistance: parseInt(maxDistance),
+          $maxDistance: maxDistance,
         },
       },
       _id: { $ne: userId }, // Exclude self

@@ -74,7 +74,7 @@ exports.getMatchedTravelers = async (req, res) => {
     }
 
     const candidates = await User.find({ _id: { $ne: userId } })
-      .select('name email location profileImage travelPreferences createdAt')
+      .select('name location profileImage travelPreferences createdAt')
       .limit(80);
 
     const matches = candidates.map((candidate) => ({
@@ -114,7 +114,7 @@ exports.getTripTravelerMatches = async (req, res) => {
     const candidates = await User.find({
       _id: { $nin: [userId, ...trip.members.map((m) => getEntityId(m))] },
     })
-      .select('name email location profileImage travelPreferences')
+      .select('name location profileImage travelPreferences')
       .limit(80);
 
     const matches = candidates.map((candidate) => ({
