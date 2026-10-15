@@ -449,11 +449,13 @@ io.on('connection', (socket) => {
         return;
       }
 
-      const trip = await Trip.findById(tripId).select('members').populate('members', 'name');
+      const trip = await Trip.findOne({ _id: tripId, members: socket.userId })
+        .select('members')
+        .populate('members', 'name');
 
       if (!trip) {
         socket.emit('tripMemberCountsError', {
-          message: 'Trip not found',
+          message: 'Trip not found or access denied',
         });
         return;
       }
