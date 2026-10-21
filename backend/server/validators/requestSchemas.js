@@ -13,9 +13,10 @@ const optionalNumber = (schema) =>
   }, schema.optional());
 
 // Coordinate validation: latitude (-90 to 90), longitude (-180 to 180)
-const validDateString = z.string().trim().min(1).refine((value) => !Number.isNaN(Date.parse(value)), {
-  message: 'Date must be a valid date',
-});
+const validDateString = z.string().trim().min(1).refine(
+  (value) => !Number.isNaN(Date.parse(value)),
+  { message: 'Date must be a valid date' }
+);
 
 const coordinatesSchema = z
   .array(z.number().finite())
