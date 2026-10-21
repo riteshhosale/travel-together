@@ -91,11 +91,11 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         run: |
           if [ -z "${KUBE_CONFIG_DATA:-}" ]; then
-            echo "KUBE_CONFIG secret is not set; skipping deployment";
+            echo "KUBE_CONFIG secret is not set; aborting deployment";
             exit 1;
           fi
           echo "Decoding kubeconfig..."
-          echo "${KUBE_CONFIG_DATA}" | base64 --decode > kubeconfig
+          printf '%s' "$KUBE_CONFIG_DATA" | base64 --decode > kubeconfig
           mkdir -p ~/.kube
           mv kubeconfig ~/.kube/config
           chmod 600 ~/.kube/config
