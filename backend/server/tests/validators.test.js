@@ -44,7 +44,6 @@ describe('match preferences validator', () => {
   });
 });
 
-
 describe('trip date validation', () => {
   it('accepts an ISO date for trip creation', () => {
     assert.equal(
@@ -61,10 +60,12 @@ describe('trip date validation', () => {
   });
 
   it('rejects an invalid date in a trip update', () => {
-    assert.equal(updateTripSchema.safeParse({ date: 'not-a-date' }).success, false);
+    assert.equal(
+      updateTripSchema.safeParse({ date: 'not-a-date' }).success,
+      false
+    );
   });
 });
-
 
 describe('trip destination coordinates validation', () => {
   it('accepts GeoJSON destination coordinates with valid longitude and latitude', () => {
@@ -83,13 +84,18 @@ describe('trip destination coordinates validation', () => {
   });
 });
 
-
 describe('GPS location validation', () => {
   it('rejects non-finite coordinates', () => {
-    assert.equal(updateGpsSchema.safeParse({ coordinates: [Infinity, 18.5] }).success, false);
+    assert.equal(
+      updateGpsSchema.safeParse({ coordinates: [Infinity, 18.5] }).success,
+      false
+    );
   });
 
   it('accepts valid GeoJSON coordinate ordering', () => {
-    assert.equal(updateGpsSchema.safeParse({ coordinates: [73.8567, 18.5204] }).success, true);
+    assert.equal(
+      updateGpsSchema.safeParse({ coordinates: [73.8567, 18.5204] }).success,
+      true
+    );
   });
 });
