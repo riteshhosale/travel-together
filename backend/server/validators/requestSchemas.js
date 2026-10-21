@@ -112,6 +112,7 @@ module.exports = {
   loginSchema,
   createTripSchema,
   updateTripSchema,
+  validDateString,
   createReviewSchema,
   updateReviewSchema,
   changePasswordSchema,
