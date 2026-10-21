@@ -55,17 +55,11 @@ describe('matching utils', () => {
   it('scores travelers with shared style', () => {
     const viewer = {
       location: 'Mumbai',
-      travelPreferences: {
-        travelStyle: 'adventure',
-        preferredDestinations: ['Himachal'],
-      },
+      travelPreferences: { travelStyle: 'adventure', preferredDestinations: ['Himachal'] },
     };
     const candidate = {
       location: 'Mumbai',
-      travelPreferences: {
-        travelStyle: 'adventure',
-        preferredDestinations: ['Himachal'],
-      },
+      travelPreferences: { travelStyle: 'adventure', preferredDestinations: ['Himachal'] },
     };
 
     assert.ok(scoreTravelerForUser(viewer, candidate) >= 20);
