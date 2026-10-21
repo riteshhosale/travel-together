@@ -62,7 +62,10 @@ describe('matching utils', () => {
     };
     const candidate = {
       location: 'Mumbai',
-      travelPreferences: { travelStyle: 'adventure', preferredDestinations: ['Himachal'] },
+      travelPreferences: {
+        travelStyle: 'adventure',
+        preferredDestinations: ['Himachal'],
+      },
     };
 
     assert.ok(scoreTravelerForUser(viewer, candidate) >= 20);
