@@ -121,6 +121,7 @@ module.exports = {
   forgotPasswordSchema,
   resetPasswordSchema,
   updateMatchPreferencesSchema,
+  updateTripDestinationSchema,
   coordinatesSchema,
   updateGpsSchema,
   updateTripDestinationSchema,
