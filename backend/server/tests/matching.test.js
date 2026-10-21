@@ -62,14 +62,13 @@ describe('matching utils', () => {
   });
 });
 
-
 describe('trip traveler matching authorization', () => {
-  it('keeps the controller's trip-member check helper behavior consistent', () => {
+  it("keeps the controller's trip-member check helper behavior consistent", () => {
     const source = fs.readFileSync(
       require.resolve('../controllers/matchingController'),
       'utf8'
     );
     assert.match(source, /Only trip members can find travelers for this trip/);
-    assert.match(source, /if \(!isTripMember\(trip, userId\)\)/);
+    assert.match(source, /if \\(!isTripMember\\(trip, userId\\)\\)/);
   });
 });
