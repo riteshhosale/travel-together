@@ -31,6 +31,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Diagnose Prettier formatting
+        run: |
+          npx prettier --write "server/tests/matching.test.js" "server/tests/validators.test.js"
+          git diff -- server/tests/matching.test.js server/tests/validators.test.js
+
       - name: Check code format
         run: npm run format:check
 
