@@ -13,6 +13,11 @@ const optionalNumber = (schema) =>
   }, schema.optional());
 
 // Coordinate validation: latitude (-90 to 90), longitude (-180 to 180)
+const validDateString = z.string().trim().min(1).refine(
+  (value) => !Number.isNaN(Date.parse(value)),
+  { message: 'Date must be a valid date' }
+);
+
 const coordinatesSchema = z
   .array(z.number().finite())
   .length(2)
@@ -34,7 +39,7 @@ const loginSchema = z.object({
 
 const createTripSchema = z.object({
   destination: z.string().trim().min(1).max(160),
-  date: z.string().trim().min(1),
+  date: validDateString,
   budget: optionalNumber(z.coerce.number().finite().nonnegative()),
   description: optionalTrimmedString,
   maxMembers: optionalNumber(z.coerce.number().int().positive()),
@@ -44,7 +49,7 @@ const createTripSchema = z.object({
 
 const updateTripSchema = z.object({
   destination: z.string().trim().min(1).max(160).optional(),
-  date: z.string().trim().min(1).optional(),
+  date: validDateString.optional(),
   budget: optionalNumber(z.coerce.number().finite().nonnegative()),
   description: optionalTrimmedString,
   maxMembers: optionalNumber(z.coerce.number().int().positive()),
@@ -90,7 +95,7 @@ const createReviewSchema = z.object({
 // GPS location update schema
 const updateGpsSchema = z.object({
   coordinates: coordinatesSchema,
-  accuracy: optionalNumber(z.coerce.number().positive()),
+  accuracy: optionalNumber(z.coerce.number().finite().positive()),
 });
 
 // Update trip destination with coordinates
@@ -98,6 +103,7 @@ const updateTripDestinationSchema = z.object({
   destination: z.string().trim().min(1).max(160).optional(),
   destinationCoordinates: z
     .object({
+      type: z.literal('Point').optional(),
       coordinates: coordinatesSchema,
     })
     .optional(),
@@ -114,6 +120,7 @@ module.exports = {
   forgotPasswordSchema,
   resetPasswordSchema,
   updateMatchPreferencesSchema,
+  updateTripDestinationSchema,
   coordinatesSchema,
   updateGpsSchema,
   updateTripDestinationSchema,

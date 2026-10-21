@@ -90,25 +90,6 @@ function App() {
       if (!isAuthenticated() && !hasVisited && !isAuthOrLegalPage) {
         localStorage.setItem('hasVisited', '1');
 
-        try {
-          const defaultEmail = process.env.REACT_APP_DEFAULT_USER_EMAIL;
-          const cleanupToken = process.env.REACT_APP_CLEANUP_TOKEN;
-
-          if (defaultEmail && cleanupToken) {
-            fetch(
-              `${process.env.REACT_APP_API_URL || ''}/internal/delete-default-user?email=${encodeURIComponent(defaultEmail)}`,
-              {
-                method: 'POST',
-                headers: {
-                  'x-cleanup-token': cleanupToken,
-                },
-              }
-            ).catch(() => {});
-          }
-        } catch (e) {
-          // ignore
-        }
-
         setToast({
           message: 'Create an account to save trips, use AI tools, and keep your plans in sync.',
           type: 'info',

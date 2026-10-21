@@ -542,10 +542,11 @@ exports.getNearbyTrips = async (req, res) => {
       });
     }
 
-    const lng = parseFloat(longitude);
-    const lat = parseFloat(latitude);
+    const lng = Number(longitude);
+    const lat = Number(latitude);
+    const distance = Number(maxDistance);
 
-    if (isNaN(lng) || isNaN(lat)) {
+    if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
       return res.status(400).json({
         message: 'Invalid coordinates',
       });
@@ -557,6 +558,12 @@ exports.getNearbyTrips = async (req, res) => {
       });
     }
 
+    if (!Number.isFinite(distance) || distance < 1 || distance > 500000) {
+      return res.status(400).json({
+        message: 'maxDistance must be a number between 1 and 500000 meters',
+      });
+    }
+
     // Find trips with destination coordinates near the given location
     const nearbyTrips = await Trip.find({
       destinationCoordinates: {
@@ -565,7 +572,7 @@ exports.getNearbyTrips = async (req, res) => {
             type: 'Point',
             coordinates: [lng, lat],
           },
-          $maxDistance: parseInt(maxDistance),
+          $maxDistance: distance,
         },
       },
     })
@@ -577,7 +584,7 @@ exports.getNearbyTrips = async (req, res) => {
 
     res.json({
       searchLocation: { longitude: lng, latitude: lat },
-      maxDistance: maxDistance,
+      maxDistance: distance,
       count: serializedTrips.length,
       trips: serializedTrips,
     });

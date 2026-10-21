@@ -24,6 +24,12 @@ exports.updateGpsLocation = async (req, res) => {
 
     const [lng, lat] = coordinates;
 
+    if (!Number.isFinite(lng) || !Number.isFinite(lat)) {
+      return res.status(400).json({
+        message: 'Invalid coordinates',
+      });
+    }
+
     // Validate coordinate ranges
     if (lng < -180 || lng > 180 || lat < -90 || lat > 90) {
       return res.status(400).json({
@@ -44,15 +50,18 @@ exports.updateGpsLocation = async (req, res) => {
     };
 
     // Add to location history (keep last 100 entries)
-    user.locationHistory.push({
+    const locationHistory = Array.isArray(user.locationHistory) ? user.locationHistory : [];
+    locationHistory.push({
       coordinates: [lng, lat],
       timestamp: new Date(),
       accuracy: accuracy || undefined,
     });
 
     // Keep only last 100 location history entries
-    if (user.locationHistory.length > 100) {
-      user.locationHistory = user.locationHistory.slice(-100);
+    if (locationHistory.length > 100) {
+      user.locationHistory = locationHistory.slice(-100);
+    } else {
+      user.locationHistory = locationHistory;
     }
 
     await user.save();

@@ -105,10 +105,18 @@ exports.getTripTravelerMatches = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
+    if (!tripId || !/^[a-f\d]{24}$/i.test(String(tripId))) {
+      return res.status(400).json({ message: 'Invalid trip id' });
+    }
+
     const trip = await Trip.findById(tripId).populate('members', 'name');
 
     if (!trip) {
       return res.status(404).json({ message: 'Trip not found' });
+    }
+
+    if (!isTripMember(trip, userId)) {
+      return res.status(403).json({ message: 'Only trip members can find travelers for this trip' });
     }
 
     const candidates = await User.find({

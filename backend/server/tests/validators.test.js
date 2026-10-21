@@ -4,6 +4,10 @@ const {
   forgotPasswordSchema,
   resetPasswordSchema,
   updateMatchPreferencesSchema,
+  updateTripDestinationSchema,
+  createTripSchema,
+  updateTripSchema,
+  updateGpsSchema,
 } = require('../validators/requestSchemas');
 
 describe('auth validators', () => {
@@ -37,5 +41,55 @@ describe('match preferences validator', () => {
       bio: 'Love hiking',
     });
     assert.equal(result.success, true);
+  });
+});
+
+
+describe('trip date validation', () => {
+  it('accepts an ISO date for trip creation', () => {
+    assert.equal(
+      createTripSchema.safeParse({ destination: 'Goa', date: '2027-01-12' }).success,
+      true
+    );
+  });
+
+  it('rejects an invalid date before it reaches the controller', () => {
+    assert.equal(
+      createTripSchema.safeParse({ destination: 'Goa', date: 'not-a-date' }).success,
+      false
+    );
+  });
+
+  it('rejects an invalid date in a trip update', () => {
+    assert.equal(updateTripSchema.safeParse({ date: 'not-a-date' }).success, false);
+  });
+});
+
+
+describe('trip destination coordinates validation', () => {
+  it('accepts GeoJSON destination coordinates with valid longitude and latitude', () => {
+    const result = updateTripDestinationSchema.safeParse({
+      destination: 'Goa',
+      destinationCoordinates: { type: 'Point', coordinates: [73.8567, 18.5204] },
+    });
+    assert.equal(result.success, true);
+  });
+
+  it('rejects out-of-range destination coordinates', () => {
+    const result = updateTripDestinationSchema.safeParse({
+      destinationCoordinates: { type: 'Point', coordinates: [190, 18.5204] },
+    });
+    assert.equal(result.success, false);
+  });
+});
+
+
+describe('GPS location validation', () => {
+  it('rejects non-finite coordinates', () => {
+    assert.equal(updateGpsSchema.safeParse({ coordinates: [Infinity, 18.5] }).success, false);
+  });
+
+  it('accepts valid GeoJSON coordinate ordering', () => {
+    assert.equal(updateGpsSchema.safeParse({ coordinates: [73.8567, 18.5204] }).success, true);
   });
 });
