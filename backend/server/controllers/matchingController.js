@@ -116,7 +116,9 @@ exports.getTripTravelerMatches = async (req, res) => {
     }
 
     if (!isTripMember(trip, userId)) {
-      return res.status(403).json({ message: 'Only trip members can find travelers for this trip' });
+      return res.status(403).json({
+        message: 'Only trip members can find travelers for this trip',
+      });
     }
 
     const candidates = await User.find({
