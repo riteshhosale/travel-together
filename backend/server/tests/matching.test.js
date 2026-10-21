@@ -62,9 +62,8 @@ describe('matching utils', () => {
   });
 });
 
-
 describe('trip traveler matching authorization', () => {
-  it('keeps the controller's trip-member check helper behavior consistent', () => {
+  it("keeps the controller's trip-member check helper behavior consistent", () => {
     const source = fs.readFileSync(
       require.resolve('../controllers/matchingController'),
       'utf8'
