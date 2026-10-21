@@ -75,7 +75,7 @@ describe('trip destination coordinates validation', () => {
   });
 
   it('rejects out-of-range destination coordinates', () => {
-    const result = require('../validators/requestSchemas').updateTripDestinationSchema.safeParse({
+    const result = updateTripDestinationSchema.safeParse({
       destinationCoordinates: { type: 'Point', coordinates: [190, 18.5204] },
     });
     assert.equal(result.success, false);
