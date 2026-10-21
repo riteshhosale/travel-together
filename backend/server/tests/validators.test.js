@@ -47,14 +47,20 @@ describe('match preferences validator', () => {
 describe('trip date validation', () => {
   it('accepts an ISO date for trip creation', () => {
     assert.equal(
-      createTripSchema.safeParse({ destination: 'Goa', date: '2027-01-12' }).success,
+      createTripSchema.safeParse({
+        destination: 'Goa',
+        date: '2027-01-12',
+      }).success,
       true
     );
   });
 
   it('rejects an invalid date before it reaches the controller', () => {
     assert.equal(
-      createTripSchema.safeParse({ destination: 'Goa', date: 'not-a-date' }).success,
+      createTripSchema.safeParse({
+        destination: 'Goa',
+        date: 'not-a-date',
+      }).success,
       false
     );
   });
