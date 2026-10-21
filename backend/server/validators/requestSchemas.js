@@ -13,6 +13,10 @@ const optionalNumber = (schema) =>
   }, schema.optional());
 
 // Coordinate validation: latitude (-90 to 90), longitude (-180 to 180)
+const validDateString = z.string().trim().min(1).refine((value) => !Number.isNaN(Date.parse(value)), {
+  message: 'Date must be a valid date',
+});
+
 const coordinatesSchema = z
   .array(z.number().finite())
   .length(2)
@@ -34,7 +38,7 @@ const loginSchema = z.object({
 
 const createTripSchema = z.object({
   destination: z.string().trim().min(1).max(160),
-  date: z.string().trim().min(1),
+  date: validDateString,
   budget: optionalNumber(z.coerce.number().finite().nonnegative()),
   description: optionalTrimmedString,
   maxMembers: optionalNumber(z.coerce.number().int().positive()),
@@ -44,7 +48,7 @@ const createTripSchema = z.object({
 
 const updateTripSchema = z.object({
   destination: z.string().trim().min(1).max(160).optional(),
-  date: z.string().trim().min(1).optional(),
+  date: validDateString.optional(),
   budget: optionalNumber(z.coerce.number().finite().nonnegative()),
   description: optionalTrimmedString,
   maxMembers: optionalNumber(z.coerce.number().int().positive()),
