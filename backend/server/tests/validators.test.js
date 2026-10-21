@@ -47,14 +47,20 @@ describe('match preferences validator', () => {
 describe('trip date validation', () => {
   it('accepts an ISO date for trip creation', () => {
     assert.equal(
-      createTripSchema.safeParse({ destination: 'Goa', date: '2027-01-12' }).success,
+      createTripSchema.safeParse({
+        destination: 'Goa',
+        date: '2027-01-12',
+      }).success,
       true
     );
   });
 
   it('rejects an invalid date before it reaches the controller', () => {
     assert.equal(
-      createTripSchema.safeParse({ destination: 'Goa', date: 'not-a-date' }).success,
+      createTripSchema.safeParse({
+        destination: 'Goa',
+        date: 'not-a-date',
+      }).success,
       false
     );
   });
@@ -68,17 +74,26 @@ describe('trip date validation', () => {
 });
 
 describe('trip destination coordinates validation', () => {
-  it('accepts GeoJSON destination coordinates with valid longitude and latitude', () => {
-    const result = updateTripDestinationSchema.safeParse({
-      destination: 'Goa',
-      destinationCoordinates: { type: 'Point', coordinates: [73.8567, 18.5204] },
-    });
-    assert.equal(result.success, true);
-  });
+  it(
+    'accepts GeoJSON destination coordinates with valid longitude and latitude',
+    () => {
+      const result = updateTripDestinationSchema.safeParse({
+        destination: 'Goa',
+        destinationCoordinates: {
+          type: 'Point',
+          coordinates: [73.8567, 18.5204],
+        },
+      });
+      assert.equal(result.success, true);
+    }
+  );
 
   it('rejects out-of-range destination coordinates', () => {
     const result = updateTripDestinationSchema.safeParse({
-      destinationCoordinates: { type: 'Point', coordinates: [190, 18.5204] },
+      destinationCoordinates: {
+        type: 'Point',
+        coordinates: [190, 18.5204],
+      },
     });
     assert.equal(result.success, false);
   });
