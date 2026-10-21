@@ -94,7 +94,7 @@ const createReviewSchema = z.object({
 // GPS location update schema
 const updateGpsSchema = z.object({
   coordinates: coordinatesSchema,
-  accuracy: optionalNumber(z.coerce.number().positive()),
+  accuracy: optionalNumber(z.coerce.number().finite().positive()),
 });
 
 // Update trip destination with coordinates
