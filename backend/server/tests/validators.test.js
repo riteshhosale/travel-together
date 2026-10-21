@@ -4,6 +4,7 @@ const {
   forgotPasswordSchema,
   resetPasswordSchema,
   updateMatchPreferencesSchema,
+  updateTripDestinationSchema,
   createTripSchema,
   updateTripSchema,
 } = require('../validators/requestSchemas');
@@ -66,7 +67,7 @@ describe('trip date validation', () => {
 
 describe('trip destination coordinates validation', () => {
   it('accepts GeoJSON destination coordinates with valid longitude and latitude', () => {
-    const result = require('../validators/requestSchemas').updateTripDestinationSchema.safeParse({
+    const result = updateTripDestinationSchema.safeParse({
       destination: 'Goa',
       destinationCoordinates: { type: 'Point', coordinates: [73.8567, 18.5204] },
     });
