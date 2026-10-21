@@ -69,6 +69,6 @@ describe('trip traveler matching authorization', () => {
       'utf8'
     );
     assert.match(source, /Only trip members can find travelers for this trip/);
-    assert.match(source, /if \\(!isTripMember\\(trip, userId\\)\\)/);
+    assert.match(source, /if \(!isTripMember\(trip, userId\)\)/);
   });
 });
