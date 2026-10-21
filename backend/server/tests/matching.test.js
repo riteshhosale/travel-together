@@ -1,5 +1,6 @@
 const { describe, it } = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
 const {
   destinationScore,
   budgetScore,
@@ -64,7 +65,7 @@ describe('matching utils', () => {
 
 describe('trip traveler matching authorization', () => {
   it('keeps the controller's trip-member check helper behavior consistent', () => {
-    const source = require('node:fs').readFileSync(
+    const source = fs.readFileSync(
       require.resolve('../controllers/matchingController'),
       'utf8'
     );
