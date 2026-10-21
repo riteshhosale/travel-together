@@ -102,6 +102,7 @@ const updateTripDestinationSchema = z.object({
   destination: z.string().trim().min(1).max(160).optional(),
   destinationCoordinates: z
     .object({
+      type: z.literal('Point').optional(),
       coordinates: coordinatesSchema,
     })
     .optional(),
