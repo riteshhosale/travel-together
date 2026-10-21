@@ -105,7 +105,7 @@ exports.getTripTravelerMatches = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    if (!tripId || !/^[a-f\\d]{24}$/i.test(String(tripId))) {
+    if (!tripId || !/^[a-f\d]{24}$/i.test(String(tripId))) {
       return res.status(400).json({ message: 'Invalid trip id' });
     }
 
