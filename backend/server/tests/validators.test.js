@@ -7,6 +7,7 @@ const {
   updateTripDestinationSchema,
   createTripSchema,
   updateTripSchema,
+  updateGpsSchema,
 } = require('../validators/requestSchemas');
 
 describe('auth validators', () => {
@@ -79,5 +80,16 @@ describe('trip destination coordinates validation', () => {
       destinationCoordinates: { type: 'Point', coordinates: [190, 18.5204] },
     });
     assert.equal(result.success, false);
+  });
+});
+
+
+describe('GPS location validation', () => {
+  it('rejects non-finite coordinates', () => {
+    assert.equal(updateGpsSchema.safeParse({ coordinates: [Infinity, 18.5] }).success, false);
+  });
+
+  it('accepts valid GeoJSON coordinate ordering', () => {
+    assert.equal(updateGpsSchema.safeParse({ coordinates: [73.8567, 18.5204] }).success, true);
   });
 });
