@@ -4,6 +4,8 @@ const {
   forgotPasswordSchema,
   resetPasswordSchema,
   updateMatchPreferencesSchema,
+  createTripSchema,
+  updateTripSchema,
 } = require('../validators/requestSchemas');
 
 describe('auth validators', () => {
@@ -37,5 +39,26 @@ describe('match preferences validator', () => {
       bio: 'Love hiking',
     });
     assert.equal(result.success, true);
+  });
+});
+
+
+describe('trip date validation', () => {
+  it('accepts an ISO date for trip creation', () => {
+    assert.equal(
+      createTripSchema.safeParse({ destination: 'Goa', date: '2027-01-12' }).success,
+      true
+    );
+  });
+
+  it('rejects an invalid date before it reaches the controller', () => {
+    assert.equal(
+      createTripSchema.safeParse({ destination: 'Goa', date: 'not-a-date' }).success,
+      false
+    );
+  });
+
+  it('rejects an invalid date in a trip update', () => {
+    assert.equal(updateTripSchema.safeParse({ date: 'not-a-date' }).success, false);
   });
 });
