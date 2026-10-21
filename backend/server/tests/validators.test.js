@@ -77,15 +77,16 @@ describe('trip destination coordinates validation', () => {
   it(
     'accepts GeoJSON destination coordinates with valid longitude and latitude',
     () => {
-    const result = updateTripDestinationSchema.safeParse({
-      destination: 'Goa',
-      destinationCoordinates: {
-        type: 'Point',
-        coordinates: [73.8567, 18.5204],
-      },
-    });
-    assert.equal(result.success, true);
-  });
+      const result = updateTripDestinationSchema.safeParse({
+        destination: 'Goa',
+        destinationCoordinates: {
+          type: 'Point',
+          coordinates: [73.8567, 18.5204],
+        },
+      });
+      assert.equal(result.success, true);
+    }
+  );
 
   it('rejects out-of-range destination coordinates', () => {
     const result = updateTripDestinationSchema.safeParse({
